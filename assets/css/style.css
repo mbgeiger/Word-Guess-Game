@@ -1,0 +1,9 @@
+body{
+    color: rgb(13, 35, 43);
+    background: silver;
+}
+
+.background{
+    background: aquamarine;
+    background-image: url("../images/energy-drinks.jpg");
+}
