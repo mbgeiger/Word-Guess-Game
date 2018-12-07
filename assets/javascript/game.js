@@ -1,8 +1,9 @@
+/*all game variables
 var $newGameButton = document.getElementById('newGameButton');
 var $placeholders = document.getElementById('placeholders');
 var $lettersGuessed = document.getElementById('letters-guessed');
 var $wins = document.getElementById('wins');
-var $remainingGuesses = document.getElementById('remaining-guesses');
+var $remainingGuesses = document.getElementById('remaining-guesses');*/
 
 
 
@@ -15,50 +16,85 @@ var $remainingGuesses = document.getElementById('remaining-guesses');
 
 
 
-//list of words for the computer to choose from
+
+//variables for the game
 var drinks = [
     "xyience", "monster", "redbull", "bang", "redline", "nos", "full throttle", "rockstar", "amp", "five hour", "jolt"
-]
+];
+
+var wins = 0;
+var remainingGuesses = 0;
+var correctGuess = [];
+var lettersGuessed = [];
+var pickedWord = '';
+var gameRunning = false;
+var pickedWordArr = [];
+
+//start a new game
+function newGame() {
+    //reset existing game
+    var gameRunning = true;
+    var wins = 0;
+    var correctGuess = [];
+    var lettersGuessed = [];
+    var pickedWordArr = [];
+
+
 
 
 //random words for the computer to choose
-var chooseDrink = function(drinks) {
-    return drinks[Math.floor(Math.random() * drinks.length)];
+pickedWord = drinks[Math.floor(Math.random() * drinks.length)];
+//create place holders for word
+for (var i = 0; 1 < pickedWord.length; i++) {
+    if (pickedWord[i] === ' ') {
+        pickedWordArr.push(' ');
+    }
+    else {
+        pickedWordArr.push('_');
+    
+    }
+     
+
+    
+    $remainingGuesses.textContent = remainingGuesses;
+    $placeholders.textContent = pickedWordArr.join('');
+    $lettersGuessed.textContent = lettersGuessed;
 }
-console.log()
+}
+console.log(newGame)
 
+//incorrect guess function
+function lettersGuessed(letters){
 
-//array of letters that the users has chosen
+    console.log(letters);
 
-var userAnswers = ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"]
+    if (gameRunning === true && correctGuess.indexOf(letters) === -1){
+// run game logic
+lettersGuessed.push(letters);
 
+//check to see if guess is in picked word
+for (var i = 0; i < pickedWord.length; i++){
 
-var answerArray = [];
-for (var i = 0; i < chooseDrink.length i++) {
-    answerArray[i] = "_";
+    //convert values to lowercase for comparison
+    if (pickedWord[i].toLowerCase() === letters.toLowerCase()){
+        //if matches than swap character in place holder to letter
+        pickedWordArr[i] === pickedWord[i];
+    }
 }
 
-var lettersRemain = chooseDrink.length;
-
-//loop for the game
-while (lettersRemain > 0) {
-    alert(userAnswers.join(" "));
-
-
-//collect user input for guess
-var userGuess = prompt("Guess a letter, or click Cancel to stop playing.");
- if (userGuess === null) {
- // Exit the game loop
- break;
- } else if (userGuess.length !== 1) {
- alert("Please enter a single letter.");
- } else {
- // Update the game state with the guess
- for (var j = 0; j < chooseDrink.length; j++) {
- if (chooseDrink [j] === userGuess) {
- answerArray[j] = userGuess;
- lettersRemain--;
- }
- }
- }
+    }
+    else {
+        if (!gameRunning){
+            alert('game not running and click new game to start');
+        
+        }
+        else {
+            alert ("you have already guessed the letter!  Pick a new letter")
+        }
+    }
 }
+console.log(lettersGuessed);
+
+
+//add event listen for start game
+newGameButton.addEventListener('click', newGame);
